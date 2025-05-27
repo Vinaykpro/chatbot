@@ -1,0 +1,1112 @@
+<html> <head> <title>Chat with Vinay</title> <meta charset="UTF-8"> <meta http-equiv="X-UA-Compatible" content="IE=Edge"> <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<style>
+    html {
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.chat {
+    height:100%;
+}
+
+.chat-container {
+    height:100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background:#e7dcd2;
+}
+
+.user-bar {
+  height: 55px;
+  background: #005e54;
+  color: #fff;
+  font-size: 24px;
+  position: absolute;
+  width:100%;
+  z-index: 1;
+}
+
+.user-bar .avatar {
+  margin: 0 0 0 5px;
+  padding-top:9px;
+  width: 36px;
+  height: 36px;
+  margin-left:12px;
+}
+
+.user-bar .avatar svg {
+  border-radius: 50%;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+  display: inline;width: 100%;
+}
+
+.user-bar .name {
+  position:absolute;
+  top:10px;
+  left:50px;
+  font-size: 17px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  letter-spacing: 0.3px;
+  margin: 0 0 0 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: auto;
+}
+
+.user-bar .status {
+  margin-left:1px;
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  width:auto;
+}
+
+
+.actionsbar {
+    position:absolute;
+    height:55px;
+    top:0;
+    right:0;
+}
+
+
+.actionsbar svg {
+    height:25px;
+    width:25px;
+    margin:15px;
+    margin-left:5px;
+    margin-right:8px;
+}
+
+#tdots {
+    margin-left:0px;
+}
+
+.conversation {
+  position: absolute;
+  background: #e7dcd2
+  top:110px;
+  z-index: 0;
+  padding:0px;
+}
+
+.conversation ::-webkit-scrollbar {
+  transition: all .5s;
+  width: 5px;
+  height: 1px;
+  z-index: 10;
+}
+
+.conversation ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.conversation ::-webkit-scrollbar-thumb {
+  background: #b3ada7;
+}
+
+.conversation .conversation-container {
+  position: relative;
+  top:55px;
+  box-shadow: inset 0 10px 10px -10px #000000;
+  overflow-x: hidden;
+  padding:0px 16px;
+  margin-bottom: 5px;
+  height:calc(100vh - 115px);
+  z-index:3;
+  width:calc(100vw - 32px);
+}
+
+.note {
+  
+  display:block;
+  opacity:0;
+  clear: both;
+  line-height: 18px;
+  padding: 6px;
+  padding-left:8px;
+  margin-top:5px;
+  max-width: 100%;
+  padding:8px;
+  background-color:#f7f7f0;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:300;
+  width:fit-content;
+  margin-left:50%;
+  transform:translate(-50%,0);
+}
+
+.message {
+  color: #000;
+  clear: both;
+  line-height: 18px;
+  font-size: 15px;
+  padding: 6px;
+  padding-left:8px;
+  position: relative;
+  margin: 2px 0;
+  margin-top:3px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.message2 {
+  color: #000;
+  clear: both;
+  line-height: 18px;
+  font-size: 15px;
+  padding: 6px;
+  padding-left:8px;
+  position: relative;
+  margin: 2px 0;
+  margin-top:3px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.message:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.metadata {
+  display: inline-block;
+  float: right;
+  padding: 0 0 0 7px;
+  position: relative;
+  bottom: -4px;
+}
+.metadata .time {
+  color: rgba(0, 0, 0, .45);
+  font-size: 11px;
+  display: inline-block;
+}
+
+.metadata .tick {
+  display: inline-block;
+  margin-left: 2px;
+  position: relative;
+  top: 4px;
+  height: 16px;
+  width: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='15'%3E%3Cpath d='M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z' fill='%234fc3f7'/%3E%3C/svg%3E"); background-repeat: no-repeat;
+}
+
+.metadata .tick svg:first-child {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: perspective(800px) rotateY(180deg);
+          transform: perspective(800px) rotateY(180deg);
+}
+
+.metadata .tick svg:last-child {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transform: perspective(800px) rotateY(0deg);
+          transform: perspective(800px) rotateY(0deg);
+}
+
+.metadata .tick-animation svg:first-child {
+  -webkit-transform: perspective(800px) rotateY(0);
+          transform: perspective(800px) rotateY(0);
+}
+
+.metadata .tick-animation svg:last-child {
+  -webkit-transform: perspective(800px) rotateY(-179.9deg);
+transform: perspective(800px) rotateY(-179.9deg);
+}
+
+.message:first-child {
+  margin: 16px 0 8px;
+}
+
+.message.received {
+  background: #fff;
+  border-radius: 0px 8px 8px 8px;
+  float: left;
+}
+
+.message2.received {
+  background: #fff;
+  border-radius: 8px 8px 8px 8px;
+  float: left;
+}
+
+.message.received .metadata {
+  padding: 0 0 0 16px;
+}
+
+.message.received:after {
+  border-width: 0px 10px 10px 0;
+  border-radius:5px 0px 0px 0px;
+  border-color: transparent #fff transparent transparent;
+  top: 0;left: -10px;
+}
+
+.message.sent {
+  background: #e1ffc7;
+  border-radius: 8px 0px 8px 8px;
+  float: right;
+}
+
+.message2.sent {
+  background: #e1ffc7;
+  border-radius: 8px 8px 8px 8px;
+  float: right;
+}
+
+.message.sent:after {
+  border-width: 0px 0px 10px 10px;
+  border-radius:0px 5px 0px 0px;
+  border-color: transparent transparent transparent #e1ffc7;
+  top: 0;
+  right: -10px;
+}
+
+.marvel-device .status-bar {
+    display: none;
+  }
+
+
+.convochatbg {
+   position: absolute;
+   background: #e7dcd2;
+   height:60px;
+   bottom:0px; 
+   width: 100vw;
+} 
+
+
+.msginput { position: relative; background: #fff; height: 45px; top:7.5px; left:6.5px; margin-right: 66px; border-radius: 50px; }
+#mic, #icsend { position: absolute; width: 47px; height: 47px; top:6.5px; right: 6.5px; }
+#emoji { position: absolute; height: 28px; width: 28px; top:8.5px; left:8.5px; } #messagetxt { position: absolute; color: #666; font-weight: 500; left:43px; top:-1.5px; } #camera { position: absolute; height: 28px; width: 28px; top:8.5px; right:8.5px; } #rupee { position: absolute; height: 28px; width: 28px; top:8.5px; right:49px; } #docs { position: absolute; height: 28px; width: 28px; top:8.5px; right:86.5px; }
+
+#msginputtag {
+    height:100%;
+    margin-left:43px;
+    width:50%;
+    font-size:16px;
+    text-decoration:none;
+    outline:none;
+    border:none;
+}
+
+</style>
+</head> 
+<body>
+
+<div class="chat">
+     <div class="chat-container">
+            <div id="call" class="user-bar">
+                <div class="back">
+                <i class="zmdi zmdi-arrow-left"></i>
+              </div>
+              <div class="avatar">
+        <svg     version="1.1"     xmlns="http://www.w3.org/2000/svg"     xmlns:xlink="http://www.w3.org/1999/xlink"     x="0%" y="0%"     width="100%" height="100%"     viewBox="0 0 24.0 24.0"     enable-background="new 0 0 24.0 24.0"     xml:space="preserve">     <path         fill="#CDD8E0"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M11.98,0.19C18.54,0.19,23.86,5.51,23.86,12.07C23.86,18.63,18.54,23.95,11.98,23.95C5.42,23.95,0.10,18.63,0.10,12.07C0.10,5.51,5.42,0.19,11.98,0.19z"/>     <path         fill="#FFFFFF"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M11.93,6.50C14.17,6.50,15.99,8.32,15.99,10.56C15.99,12.80,14.17,14.62,11.93,14.62C9.69,14.62,7.87,12.80,7.87,10.56C7.87,8.32,9.69,6.50,11.93,6.50z"/>     <path         fill="#FFFFFF"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M4.21,20.40C5.45,15.85,15.91,13.33,19.60,20.42C16.60,24.14,8.16,24.74,4.21,20.40z"/> </svg>
+              </div>
+              <div class="name">
+                <span id="num">Vinay</span>
+                <span id="status" class="status">Made by Vinaykpro</span>
+              </div>
+              <div class="actionsbar">
+                
+
+<svg     version="1.1"     xmlns="http://www.w3.org/2000/svg"     xmlns:xlink="http://www.w3.org/1999/xlink"     x="0%" y="0%"     width="100%" height="100%"     viewBox="0 0 24.0 24.0"     enable-background="new 0 0 24.0 24.0"     xml:space="preserve">     <path         fill="#FFFFFF"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M5.03,6.56L14.22,6.56A2.31 2.31 0 0 1 16.53,8.88L16.53,16.30A2.31 2.31 0 0 1 14.22,18.62L5.03,18.62A2.31 2.31 0 0 1 2.72,16.30L2.72,8.88A2.31 2.31 0 0 1 5.03,6.56z"/>     <path         fill="#FFFFFF"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M21.38,16.08C21.38,17.46,20.45,17.32,19.87,16.83L17.41,14.78Q17.04,14.41,17.04,13.83L17.04,10.94Q17.04,10.47,17.41,10.09L19.87,8.03C20.39,7.56,21.44,7.77,21.44,8.93L21.38,16.08z"/> </svg>
+
+<svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0%" y="0%"
+    width="100%" height="100%"
+    viewBox="0 0 24.0 24.0"
+    enable-background="new 0 0 24.0 24.0"
+    xml:space="preserve">
+    <path
+        fill="#FFFFFF"
+        stroke="#000000"
+        fill-opacity="1.000"
+        stroke-opacity="1.000"
+        fill-rule="nonzero"
+        stroke-width="0.0"
+        stroke-linejoin="miter"
+        stroke-linecap="square"
+        d="M20.00,15.52L19.95,18.47C20.00,19.26,19.46,19.81,18.77,19.88C11.36,20.56,3.56,13.33,3.99,5.06Q4.10,3.96,5.34,3.96L7.74,3.96Q9.13,3.96,9.31,5.54L9.53,8.03Q9.60,8.99,8.79,9.42C7.10,10.32,7.36,11.16,8.09,12.18Q9.78,14.37,12.49,16.09C14.12,17.06,13.98,14.44,15.17,14.44L19.04,14.68Q20.01,14.77,20.00,15.52z"/>
+</svg>
+
+<svg id="tdots"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0%" y="0%"
+    width="100%" height="100%"
+    viewBox="0 0 24.0 24.0"
+    enable-background="new 0 0 24.0 24.0"
+    xml:space="preserve">
+    <path
+        fill="#FFFFFF"
+        stroke="#000000"
+        fill-opacity="1.000"
+        stroke-opacity="1.000"
+        fill-rule="nonzero"
+        stroke-width="0.0"
+        stroke-linejoin="miter"
+        stroke-linecap="square"
+        d="M11.69,4.38C12.81,4.38,13.72,5.28,13.72,6.41C13.72,7.53,12.81,8.43,11.69,8.43C10.57,8.43,9.66,7.53,9.66,6.41C9.66,5.28,10.57,4.38,11.69,4.38z"/>
+    <path
+        fill="#FFFFFF"
+        stroke="#000000"
+        fill-opacity="1.000"
+        stroke-opacity="1.000"
+        fill-rule="nonzero"
+        stroke-width="0.0"
+        stroke-linejoin="miter"
+        stroke-linecap="square"
+        d="M11.69,9.83C12.81,9.83,13.72,10.74,13.72,11.86C13.72,12.98,12.81,13.89,11.69,13.89C10.57,13.89,9.66,12.98,9.66,11.86C9.66,10.74,10.57,9.83,11.69,9.83z"/>
+    <path
+        fill="#FFFFFF"
+        stroke="#000000"
+        fill-opacity="1.000"
+        stroke-opacity="1.000"
+        fill-rule="nonzero"
+        stroke-width="0.0"
+        stroke-linejoin="miter"
+        stroke-linecap="square"
+        d="M11.69,15.48C12.81,15.48,13.72,16.39,13.72,17.51C13.72,18.63,12.81,19.54,11.69,19.54C10.57,19.54,9.66,18.63,9.66,17.51C9.66,16.39,10.57,15.48,11.69,15.48z"/>
+</svg>
+
+              </div>
+              
+            </div>
+            <div class="conversation">
+              <div id="body" class="conversation-container">
+            <span id="ap">
+            </span>
+            
+            <div id="today" class="note">Today</div>            
+            </div>
+            </div>
+                
+            <div class="convochatbg"> 
+            <div class="msginput">
+                
+            <!-- Emoji svg --> 
+            <svg id="emoji"     version="1.1"     xmlns="http://www.w3.org/2000/svg"     xmlns:xlink="http://www.w3.org/1999/xlink"     x="0%" y="0%"     width="100%" height="100%"     viewBox="0 0 24.0 24.0"     enable-background="new 0 0 24.0 24.0"     xml:space="preserve">     
+            <path         fill="#FFFFFF"         stroke="#86949B"         fill-opacity="0.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.8010312"         stroke-linejoin="miter"         stroke-linecap="square"         d="M11.96,3.06C16.99,3.06,21.07,7.13,21.07,12.16C21.07,17.19,16.99,21.27,11.96,21.27C6.93,21.27,2.85,17.19,2.85,12.16C2.85,7.13,6.93,3.06,11.96,3.06z"/>     <path         fill="#86949B"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M9.34,8.47C9.92,8.47,10.39,9.21,10.39,10.12C10.39,11.02,9.92,11.76,9.34,11.76C8.75,11.76,8.28,11.02,8.28,10.12C8.28,9.21,8.75,8.47,9.34,8.47z"/>     <path         fill="#86949B"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M14.56,8.47C15.14,8.47,15.61,9.21,15.61,10.12C15.61,11.02,15.14,11.76,14.56,11.76C13.98,11.76,13.50,11.02,13.50,10.12C13.50,9.21,13.98,8.47,14.56,8.47z"/>     <path         fill="#86949B"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M7.07,14.64C9.02,18.94,14.56,18.94,17.09,14.47Q17.56,13.19,16.38,13.31Q11.96,13.80,7.54,13.28Q6.33,13.28,7.07,14.64z"/>     <path         fill="#FFFFFF"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M8.33,14.76C10.39,16.16,13.95,16.16,15.77,14.79Q16.88,13.80,15.52,14.12Q11.91,14.45,8.50,14.06Q7.07,13.80,8.33,14.76z"/> </svg> <!-- Message Text --> <input onkeyup="check()" id="msginputtag" type="textarea" name="message" value="" placeholder="Message" /> <!-- Camera Emoji --> <svg id="camera"     version="1.1"     xmlns="http://www.w3.org/2000/svg"     xmlns:xlink="http://www.w3.org/1999/xlink"     x="0%" y="0%"     width="100%" height="100%"     viewBox="0 0 24.0 24.0"     enable-background="new 0 0 24.0 24.0"     xml:space="preserve">     <path         fill="#86949B"         stroke="#86949B"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M6.84,6.11L8.47,4.15Q9.17,3.19,9.78,3.18L14.03,3.21Q14.62,3.21,15.11,3.77L17.13,6.16"/>     <path         fill="#86949B"         stroke="#2A2A2A"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M5.96,5.65L18.00,5.65A3.19 3.19 0 0 1 21.19,8.84L21.19,16.47A3.19 3.19 0 0 1 18.00,19.66L5.96,19.66A3.19 3.19 0 0 1 2.77,16.47L2.77,8.84A3.19 3.19 0 0 1 5.96,5.65z"/>     <path         fill="#86949B"         stroke="#FFFFFF"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="1.08"         stroke-linejoin="miter"         stroke-linecap="square"         d="M11.98,8.26C14.00,8.26,15.64,9.90,15.64,11.92C15.64,13.94,14.00,15.58,11.98,15.58C9.96,15.58,8.32,13.94,8.32,11.92C8.32,9.90,9.96,8.26,11.98,8.26z"/> </svg> <!-- Rupee Emoji --> <svg id="rupee"     version="1.1"     xmlns="http://www.w3.org/2000/svg"     xmlns:xlink="http://www.w3.org/1999/xlink"     x="0%" y="0%"     width="100%" height="100%"     viewBox="0 0 24.0 24.0"     enable-background="new 0 0 24.0 24.0"     xml:space="preserve">     <path         fill="#86949B"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="round"         d="M11.91,3.49C16.96,3.49,21.05,7.58,21.05,12.63C21.05,17.68,16.96,21.77,11.91,21.77C6.87,21.77,2.77,17.68,2.77,12.63C2.77,7.58,6.87,3.49,11.91,3.49z"/>     <path         fill="#000000"         stroke="#FFFFFF"         fill-opacity="0.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="1.13919"         stroke-linejoin="miter"         stroke-linecap="round"         d="M8.80,8.69L14.89,8.69"/>     <path         fill="#000000"         stroke="#FFFFFF"         fill-opacity="0.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="1.13919"         stroke-linejoin="miter"         stroke-linecap="round"         d="M8.80,11.10L14.89,11.10"/>     <path         fill="#000000"         stroke="#FFFFFF"         fill-opacity="0.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="1.13919"         stroke-linejoin="miter"         stroke-linecap="round"         d="M11.67,8.69C13.40,10.27,13.13,13.40,9.14,13.40"/>     <path         fill="#000000"         stroke="#FFFFFF"         fill-opacity="0.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="1.13919"         stroke-linejoin="miter"         stroke-linecap="round"         d="M9.23,13.50L12.37,17.26"/> </svg> <!-- Docs Emoji --> <svg id="docs"     version="1.1"     xmlns="http://www.w3.org/2000/svg"     xmlns:xlink="http://www.w3.org/1999/xlink"     x="0%" y="0%"     width="100%" height="100%"     viewBox="0 0 24.0 24.0"     enable-background="new 0 0 24.0 24.0"     xml:space="preserve">     <path         fill="#000000"         stroke="#86949B"         fill-opacity="0.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="1.08"         stroke-linejoin="miter"         stroke-linecap="square"         d="M12.66,5.77L20.28,13.36C23.27,16.09,17.20,23.05,13.90,19.75L3.98,9.82C1.55,7.26,6.44,3.26,8.49,5.44L15.76,13.01C17.09,14.22,15.46,16.54,13.54,14.87L8.70,10.18"/> </svg> </div> 
+            
+
+<svg id="icsend" onclick="send()"
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    x="0%" y="0%"
+    width="100%" height="100%"
+    viewBox="0 0 24.0 24.0"
+    enable-background="new 0 0 24.0 24.0"
+    xml:space="preserve">
+    <path
+        fill="#2BA783"
+        stroke="#000000"
+        fill-opacity="1.000"
+        stroke-opacity="1.000"
+        fill-rule="nonzero"
+        stroke-width="0.0"
+        stroke-linejoin="miter"
+        stroke-linecap="square"
+        d="M12.11,0.98C18.26,0.98,23.25,5.97,23.25,12.13C23.25,18.28,18.26,23.27,12.11,23.27C5.95,23.27,0.96,18.28,0.96,12.13C0.96,5.97,5.95,0.98,12.11,0.98z"/>
+    <path
+        fill="#FFFFFF"
+        stroke="#000000"
+        fill-opacity="1.000"
+        stroke-opacity="0.000"
+        fill-rule="nonzero"
+        stroke-width="0.2983442"
+        stroke-linejoin="miter"
+        stroke-linecap="square"
+        d="M7.48,13.14L7.48,16.32L16.90,13.49Q20.19,12.60,17.00,11.46L7.48,7.93L7.48,11.46Q16.90,12.13,7.48,13.14z"/>
+</svg>
+
+
+<svg id="mic" version="1.1"     xmlns="http://www.w3.org/2000/svg"     xmlns:xlink="http://www.w3.org/1999/xlink"     x="0%" y="0%"     width="100%" height="100%"     viewBox="0 0 24.0 24.0"     enable-background="new 0 0 24.0 24.0"     xml:space="preserve">     <path         fill="#2BA783"         stroke="#000000"         fill-opacity="1.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.0"         stroke-linejoin="miter"         stroke-linecap="square"         d="M12.11,0.98C18.26,0.98,23.25,5.97,23.25,12.13C23.25,18.28,18.26,23.27,12.11,23.27C5.95,23.27,0.96,18.28,0.96,12.13C0.96,5.97,5.95,0.98,12.11,0.98z"/>     <path         fill="#FFFFFF"         stroke="#FFFFFF"         fill-opacity="0.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="2.6880002"         stroke-linejoin="miter"         stroke-linecap="round"         d="M12.13,8.84L12.13,11.87"/>     <path         fill="#FFFFFF"         stroke="#FFFFFF"         fill-opacity="0.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.84000003"         stroke-linejoin="miter"         stroke-linecap="square"         d="M9.31,12.30C9.55,15.43,14.65,15.33,15.00,12.30"/>     <path         fill="#FFFFFF"         stroke="#FFFFFF"         fill-opacity="0.000"         stroke-opacity="1.000"         fill-rule="nonzero"         stroke-width="0.84000003"         stroke-linejoin="miter"         stroke-linecap="square"         d="M12.16,14.71L12.16,16.39"/> </svg> 
+
+
+
+            </div>
+    </div> 
+</div> 
+
+</div> </div> </div> </div>
+
+<script>
+    window.onload = function(){
+    var z = document.getElementById("today");
+    var y = document.getElementById("msginputtag");
+    var data = document.getElementById("msginputtag");
+    data.value="";
+    clock();
+document.getElementById("num").style.top="-8px";
+document.getElementById("status").innerHTML=lastseen;
+
+}
+var lastseen;
+var time;
+var date;
+var day;
+var msg;
+var replyy;
+
+//var clickAudio = new Audio("https://dl.dropboxusercontent.com/s/mx4nr71jc8zlyxb/Message%20sent%20sound.mp3?dl=0");
+//clickAudio.preload="auto";
+
+var recievedAudio = new Audio("https://dl.dropboxusercontent.com/s/404y5t6x35uyw8j/message%20recieved%20sound.mp3?dl=0");
+recievedAudio.preload="auto";
+
+var chargingMsg = "I can guess ur phone charging"
+
+if (navigator.getBattery) {
+  navigator.getBattery().then(function(battery) {
+        let batteryPercentage = battery.level * 100; 
+        if (batteryPercentage) {
+            chargingMsg = "Ni charging " + batteryPercentage +" kada chusava ela kanipettesano";
+        }
+    });
+}
+
+
+
+
+function send() {
+    
+    
+    data = document.getElementById("msginputtag");
+    
+    if (data.value=="")
+    { return }
+    
+    msg=data.value;
+    var mess=data.value;
+    
+    
+    if (navigator.getBattery) {
+  navigator.getBattery().then(function(battery) {
+        let batteryPercentage = battery.level * 100; 
+        if (batteryPercentage) {
+            chargingMsg = "Ni charging " + batteryPercentage +" kada chusava ela kanipettesano";
+        }
+    });
+}
+    
+    var body = document.getElementById("body");
+    //test.style.marginBottom="5%";
+    /*var message = document.createElement("div");
+    message.setAttribute('id','message');
+   
+    var table = document.createElement("table");
+    table.setAttribute('id','msgtable');
+    var tr = document.createElement("tr");
+    var messagetext = document.createElement("td");
+    messagetext.setAttribute('id','messagetext');
+    messagetext.innerHTML = data.value;
+    var senttime = document.createElement("td");
+    senttime.setAttribute('id','senttime');
+    senttime.innerHTML = time;
+    var ticks = document.createElement("td");
+    ticks.setAttribute('id','ticks');
+    
+    var seen = document.createElement("img");
+    seen.setAttribute('id','seen');
+    seen.className = 'seen';
+    
+     if (mess.length <=3)
+     {  message.style.marginLeft="70%";
+        messagetext.style.width="35%";
+        senttime.style.width="60%";
+     
+      }
+    
+    if (mess.length > 3 && mess.length <= 5)
+     {message.style.marginLeft="70%";
+      messagetext.style.width="50%";
+      senttime.style.width="45%";
+     }
+     
+    if (mess.length > 5 && mess.length <= 10)
+     {message.style.marginLeft="60%";
+      messagetext.style.width="40%%";
+      senttime.style.width="55%";
+     }
+    
+    if (mess.length > 10 && mess.length <= 15)
+     {message.style.marginLeft="50%";
+      messagetext.style.width="55%";
+      senttime.style.width="40%";
+     } 
+    
+    if (mess.length > 15 && mess.length <= 20)
+     {message.style.marginLeft="40%";
+      messagetext.style.width="300px";
+      senttime.style.width="75px";
+     } 
+    
+    if (mess.length > 20)
+     {message.style.marginLeft="30%";
+      messagetext.style.width="300px";
+      senttime.style.width="75px%";
+     } 
+
+    seen.src="https://i.ibb.co/DWMJB63/1623426181617.png";
+    
+    table.append(tr);
+    tr.append(messagetext);
+    tr.append(senttime);
+    tr.append(ticks);
+    ticks.append(seen);
+    
+    message.append(table);*/
+    
+    let message = "<div class='message2 sent'>"+mess+"<span class='metadata'> <span class='time'><span style='color:grey;'></span>"+time+"</span><span class='tick'></span></span></div>"
+    
+    body.innerHTML += message;
+
+    data.value = "";
+    check();
+    
+    var z = document.getElementById("today");
+    z.style.opacity=1;
+    body.scrollBy(0,50000);
+    setTimeout(blueticks,1000);
+    
+    setTimeout(online,1200);
+    
+    setTimeout(typing,2000);
+    
+}
+
+var yyy="";
+var xxx=0;
+
+function reply() {
+    
+    online();
+    
+var data = document.getElementById("data");
+    //window.scrollBy(0,50000);
+    replyy = "";
+    
+    
+var hi = ["Hello", "Hii", "Hi Nice to meet you"];
+
+var emdoing = ["Neetho Chatting","Ni Browser History Check Chustunna 🤣🤣","Ni Phone Hack Chestunna 🤫","Neeku reply istunnaa"];
+
+var love = ["Love you too ❤️❤️❤️","Love you 3000 😭 Tony Stark ni Gurtu Chesaav 🥺","Love you my dear friend 😉","Manam Already Lovers ee ga 😜"];
+
+var ha = ["Natho Chatting Ki Meeru ecche rating 🤭🤭","Veelaithe Na Chatting naku screenshot pampinchu 😜 (Original Number Ki)","Nenu Full Create avvadaniki 3 days pattindi","Ni browser history check chestunna 🤫", chargingMsg, "Inkenti","Haha"]
+
+var bye = ["Appude Bye aa 🙄","Be with you Everytime ane ga antunnav","Bye aa Ekkadiki vellipotunnaav 😒","Nenu Cheppanuu Bye Em Chestaav 😈","Sarele pakkakelli aaduko ayte bye 🤭"]
+
+var vinay = ["Ha Nene Vinay 😉","Nene Vinay ante nammesavaa 🤭🤭","He's My Owner 😘","😁😁😁😁😁"];
+
+var tinnava = ["Nuv Thinakundaa nenu eppudaina tinnanaaraa 😉","Ha Just Now 😋","Nuvv Pedathaav ani waiting 😝","Ha nuvvu"]
+
+var gf = ["Evarainaa Vastaaru ani Space Uncha 😌","Nuv Vuntanante Nenu Oddantanaa 😜","Present My phone is my Gf 🤭","Sollu vaddu nuvv untaa ante cheppu"]
+
+var ammo = ["Haa nijam ga 😂","Ha mari movolgundadu mantho 😁","Ammammoo","Ayya baboi 😂"]
+
+var how = ["Manam cheyyalenidi antuu emi ledu 😉","Ha cheppestaaru mari adaggaanee 😝","Cheppanu brother","Nuvve Cheppuu","Cheptaa lee tarwata","Ni face Chuste Cheppali anipinchatledu"]
+
+var nijam = ["Haa nammatledaa","Na meeda nammakam ledaa","Manushulu abaddam cheptaaru machinelu cheppavv","Haha avunu","Edi Nuv nijam ani nammite abaddam avtundi abaddam ani nammithe nijam avtundi"]
+
+var enti = ["Suddent ga Enti ante em cheptaam edokti","Neeku telidaa","Telsi kuda act cheyykuu","Kontii","Pakkakelli aadukoo"];
+
+
+
+var defaulT = ["Ohh", chargingMsg, "Avunaa 😂","Alagaa","Abbo","Amma baboi","Manchidi","Avna naaku telidu eppativaraku","Marchipoyaa","Haha"]
+
+
+var himsg;
+var emdoingmsg;
+var lovemsg;
+var byemsg;
+var tinnavamsg;
+var gfmsg;
+var vinaymsg;
+var hamsg;
+var ammomsg;
+var howmsg;
+var nijammsg;
+var entimsg;
+
+
+replyy = "";
+
+if( msg.search(/Hi/i) != -1 || msg.search(/Hai/i) != -1 || msg.search(/hello/i) != -1 && replyy == "")
+{
+    himsg = true;
+    replyy = "Hiiii";
+    
+}
+
+if( msg.search(/em/i) != -1 || msg.search(/doing/i) != -1 || msg.search(/chestunnav/i) != -1 ||
+msg.search(/chestunav/i) != -1 || msg.search(/emi/i) != -1 || msg.search(/chestnav/i) != -1 && replyy == "")
+{
+    emdoingmsg = true;
+    replyy = "Neetho Chatting";
+}
+
+if( msg.search(/prema/i) != -1 || msg.search(/gf/i) != -1 || msg.search(/love you/i) != -1 ||
+msg.search(/love/i) != -1 || msg.search(/143/i) != -1 || msg.search(/girl/i) != -1 && replyy == "")
+{
+    lovemsg = true;
+    replyy = "Love you too";
+}
+
+if( msg.search(/bye/i) != -1 || msg.search(/by/i) != -1 || msg.search(/Bai/i) != -1 ||
+msg.search(/Tata/i) != -1 || msg.search(/See/i) != -1 || msg.search(/CU/i) != -1 && replyy == "")
+{
+    byemsg = true;
+    replyy = "Appude Bye aa";
+}
+
+
+if( msg.search(/tinnava/i) != -1 || msg.search(/thinnava/i) != -1 || msg.search(/tinava/i) != -1 ||
+msg.search(/thinava/i) != -1 || msg.search(/breakfast/i) != -1 || msg.search(/lunch/i) != -1
+|| msg.search(/eaten/i) != -1 && replyy == "")
+{
+    tinnavamsg = true;
+    replyy = "Ha tinna nuvvu";
+}
+
+
+
+if( msg.search(/lover/i) != -1 || msg.search(/gf/i) != -1 || msg.search(/girlfriend/i) != -1 ||
+msg.search(/love story/i) != -1 || msg.search(/ammay/i) != -1 || msg.search(/girl/i) != -1 && replyy == "")
+{
+    gfmsg = true;
+    replyy = "nuvv unnav ga";
+}
+
+
+if( msg.search(/vinay/i) != -1 || msg.search(/owner/i) != -1 || msg.search(/boss/i) != -1 ||
+msg.search(/Tata/i) != -1 || msg.search(/reply/i) != -1 || msg.search(/enti/i) != -1 && replyy == "")
+{
+    vinaymsg = true;
+    replyy = "Ha nene Vinay ";
+}
+
+
+
+if( msg.search(/Haa/i) != -1 || msg.search(/Hmm/i) != -1 || msg.search(/Sare/i) != -1 ||
+msg.search(/Ok/i) != -1 || msg.search(/Mm/i) != -1 || msg.search(/Hm/i) != -1 || msg.search(/Alage/i) != -1 || msg.search(/Kaali/i) != -1 || msg.search(/Kali/i) != -1 && replyy == "")
+{
+    hamsg = true;
+    replyy = "Inkenti"
+}
+
+
+if( msg.search(/ammababoi/i) != -1 || msg.search(/baboi/i) != -1 || msg.search(/ammo/i) != -1 ||
+msg.search(/vammo/i) != -1 || msg.search(/vayabbo/i) != -1 || msg.search(/wow/i) != -1 || msg.search(/wtf/i) != -1 || msg.search(/fuck/i) != -1 || msg.search(/abbo/i) != -1 && replyy == "")
+{
+    ammomsg = true;
+    replyy = "Mari movolgundadu mantho";
+}
+
+if( msg.search("Ela") != -1 || msg.search(/How/i) != -1 || msg.search(/cheppu/i) != -1 ||
+msg.search(/reply/i) != -1 || msg.search(/enti/i) != -1 || msg.search(/yela/i) != -1 && replyy == "")
+{
+    howmsg = true;
+    replyy = "Cheppanu brother";
+}
+
+if( msg.search(/nijam/i) != -1 || msg.search(/really/i) != -1 || msg.search(/avuna/i) != -1 ||
+msg.search(/sollu/i) != -1 || msg.search(/cheppura/i) != -1 || msg.search(/rey/i) != -1 && replyy == "")
+{
+    nijammsg = true;
+    replyy = "avunuu nijam";
+}
+
+if( msg.search("what") != -1 || msg.search(/enti/i) != -1 || msg.search(/yenti/i) != -1 ||
+msg.search(/entoo/i) != -1 || msg.search(/yentra/i) != -1 || msg.search(/entra/i) != -1 && replyy == "")
+{
+    entimsg = true;
+    replyy = "Sudden ga enti ante em cheptaam edokti ";
+}
+
+
+
+
+
+
+
+if (himsg)
+{
+let len = (hi.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = hi[chnum];
+}
+
+
+if (emdoingmsg)
+{
+let len = (emdoing.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = emdoing[chnum];
+}
+
+
+if (lovemsg)
+{
+let len = (love.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = love[chnum];
+}
+
+
+if (byemsg)
+{
+let len = (bye.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = bye[chnum];
+}
+
+
+if (tinnavamsg)
+{
+let len = (tinnava.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = tinnava[chnum];
+}
+
+
+if (gfmsg)
+{
+let len = (gf.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = gf[chnum];
+}
+
+
+
+if (vinaymsg)
+{
+let len = (vinay.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = (vinay[chnum]);
+}
+
+if (hamsg)
+{
+let len= (ha.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = (ha[chnum]);
+}
+
+if (ammomsg)
+{
+let len= (ammo.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = (ammo[chnum]);
+}
+
+if (howmsg)
+{
+let len= (how.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = (how[chnum]);
+}
+
+if (nijammsg)
+{
+let len= (nijam.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = (nijam[chnum]);
+}
+
+if (entimsg)
+{
+let len= (enti.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = (enti[chnum]);
+}
+
+
+if (replyy == "")
+{
+/*if(xxx==0)
+{
+
+navigator.getBattery().then(function(battery) {
+
+perc = battery.level*100;
+
+temp(perc);
+
+});
+
+replyy = yyy;
+xxx+=1;
+}
+else
+{ */
+let len= (defaulT.length-1);
+let chnum = Math.floor((Math.random()*len));
+replyy = (defaulT[chnum]);
+
+}
+
+
+
+/* 
+😁😆😅😂🤣🙂🙃😉😌😍🥰😘😋😝😜🤪🤨🥳🤩😒🥺😳😱🤬🤫🤭🤔🙄🥴😴😭☹️😢😎😚😈👻👊💪🤟✌️👋🙏
+*/
+    /*var body = document.getElementById("body");
+    
+    var message = document.createElement("div");
+    message.setAttribute('id','reply');
+    if(replyy.length < 10)
+    {
+        message.style.width="60%";
+    }
+
+    var table = document.createElement("table");
+    
+    var tr = document.createElement("tr");
+    var messagetext = document.createElement("td");
+    messagetext.setAttribute('id','messagetext2');
+    messagetext.innerHTML = replyy;
+    var senttime = document.createElement("td");
+    senttime.setAttribute('id','senttime2');
+    senttime.innerHTML = time;
+    
+    
+    table.append(tr);
+    tr.append(messagetext);
+    tr.append(senttime);
+    
+    message.append(table);*/
+    
+    let message = "<div class='message2 received'>"+replyy+"<span class='metadata'> <span class='time'><span style='color:grey;'></span>"+time+"</span></span></span></div>";
+    
+    body.innerHTML += message;
+    body.scrollBy(0,50000);
+    
+    navigator.vibrate(0.1*1000);
+    
+}
+
+
+
+function clock() {
+var d = new Date();
+sd = String(d);
+time = sd.slice(16,21);
+
+lastmin = Number(time.slice(3,5));
+
+if(lastmin<=9)
+{
+    lastmin="0"+lastmin;
+}
+lastseen = time.slice(0,3).concat("",lastmin);
+let ampm = (lastseen.slice(0,2));
+
+if(ampm > 12)
+{
+let h = Number(lastseen.slice(0,2))-12;
+time = time.slice(2);
+time = h+time;
+lastseen = lastseen.slice(2);
+lastseen = String(h)+lastseen;
+lastseen += ' pm';
+time += ' pm';
+}
+else
+{
+    lastseen += ' am';
+    time +=' am'
+}
+
+lastseen = "last seen today at "+lastseen;
+date = sd.slice(4,16);
+day = sd.slice(0,3);
+setTimeout(clock,1000);
+}
+
+
+function blueticks() {
+   
+var image = document.getElementsByClassName("seen");
+let i=0;
+while (i<image.length) {
+image[i].src="https://i.ibb.co/qsfbFBQ/1623426201770.png";
+i++;
+}
+
+}
+
+function typing() {
+   document.getElementById("status").innerHTML="typing...";
+   setTimeout(reply,2000);
+}
+
+function online() {
+    document.getElementById("status").innerHTML="online";
+   
+}
+
+
+function check() {
+    var x = document.getElementById("msginputtag").value;
+    var y = document.getElementById("mic");
+    if(x == "")
+    {
+        y.style.display = "block";
+    }
+    else
+    {
+        y.style.display = "none";
+    }
+}
+
+
+function temp(percentage)
+{
+    if(percentage > 50)
+    {yyy = " 50 kante ekkuva ";}
+    else
+    {yyy = "50 kante takkuva ";}
+    alert(yyy)
+}
+
+
+function sound() {
+    clickAudio.play();
+}
+
+function disable() {
+let vocall = document.getElementById("voicecall");
+let vicall = document.getElementById("videocall");
+let options1 = document.getElementById("options");
+let options2 = document.getElementById("options2");
+let blank = document.getElementById("blank");
+    vocall.style.display ="none";
+    vicall.style.display ="none";
+    options1.style.display="none";
+    options2.style.display="none";
+    blank.style.display ="none";
+}
+
+
+
+function voicecall() {
+    sound();
+    var blank = document.getElementById("blank");
+    blank.style.opacity="0.5";
+    var voiceCalll = document.getElementById("voicecall");
+    blank.style.display="block";
+    voiceCalll.style.display="block";
+}
+
+function videocall() {
+    sound();
+    var blank = document.getElementById("blank");
+    blank.style.opacity="0.5";
+    var voiceCalll = document.getElementById("videocall");
+    blank.style.display="block";
+    voiceCalll.style.display="block";
+}
+
+function options() {
+    sound();
+    let opt = document.getElementById("options");
+    let blank = document.getElementById("blank");
+    blank.style.display="block";
+    blank.style.opacity="0";
+    opt.style.display="block";
+    
+}
+
+function options2() {
+    sound();
+    let opt = document.getElementById("options");
+    let opt2 = document.getElementById("options2");
+    let blank = document.getElementById("blank");
+    blank.style.display="block";
+    blank.style.opacity="0";
+    opt.style.display="none";
+    opt2.style.display="block";
+}
+
+
+
+
+
+
+
+/*
+
+
+https://i.ibb.co/zXhFd47/1623303238616.png
+
+
+https://i.ibb.co/pwnPqvn/1623303087228.png
+
+
+var body = document.getElementById("body");
+    var message = document.createElement("div");
+    var msgdiv = document.createElement("div");
+    var timediv = document.createElement("div");
+    message.setAttribute('id','message');
+    msgdiv.setAttribute('id','msgdiv');
+    timediv.setAttribute('id','timediv');
+    
+    
+    var text = data.value;
+    
+    var p = document.createElement("p");
+    p.setAttribute('id','messagetext');
+    p.innerHTML = text;
+    
+    var h6 = document.createElement("h6");
+    h6.setAttribute('id','senttime');
+    h6.innerHTML = time;
+    
+    
+    msgdiv.append(p);
+    timediv.append(h6);
+    message.append(msgdiv);
+    message.append(timediv);
+    body.appendChild(message);
+    
+
+//creating a new paragraph
+    var p = document.createElement("p");
+    var node = document.createTextNode("Some new text");
+    //adding the text to the paragraph
+    p.appendChild(node);
+
+    var div = document.getElementById("demo");
+    //adding the paragraph to the div
+    div.appendChild(p);
+
+
+<img id="stickers" src="https://i.ibb.co/3T9vPWS/1623240304838.png"/> */
+
+</script>
+
+</body>
+ </html>
