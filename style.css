@@ -1,0 +1,363 @@
+html {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.chat-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #e7dcd2;
+  background-color: #000;
+}
+
+.user-bar {
+  position: fixed;
+  top: 0;
+  height: 55px;
+  background: #005e54;
+  color: #fff;
+  font-size: 24px;
+  width: 100%;
+  z-index: 1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+.user-bar .avatar {
+  margin: 0 0 0 5px;
+  padding-top: 9px;
+  width: 36px;
+  height: 36px;
+  margin-left: 12px;
+}
+
+.user-bar .avatar svg {
+  border-radius: 50%;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+  display: inline;
+  width: 100%;
+}
+
+.user-bar .name {
+  position: absolute;
+  top: 10px;
+  left: 50px;
+  font-size: 17px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  letter-spacing: 0.3px;
+  margin: 0 0 0 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: auto;
+}
+
+.user-bar .status {
+  margin-left: 1px;
+  display: block;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0;
+  width: auto;
+}
+
+
+.actionsbar {
+  position: absolute;
+  height: 55px;
+  top: 0;
+  right: 0;
+}
+
+
+.actionsbar svg {
+  height: 25px;
+  width: 25px;
+  margin: 15px;
+  margin-left: 5px;
+  margin-right: 8px;
+}
+
+#tdots {
+  margin-left: 0px;
+}
+
+.conversation {
+  background: #e7dcd2;
+  padding-top: 55px;
+  padding-bottom: 60px;
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.conversation ::-webkit-scrollbar {
+  transition: all .5s;
+  width: 5px;
+  height: 1px;
+  z-index: 10;
+}
+
+.conversation ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.conversation ::-webkit-scrollbar-thumb {
+  background: #b3ada7;
+}
+
+.conversation .conversation-container {
+  flex: 1;
+  overflow-x: hidden;
+  padding: 0px 16px;
+  margin-bottom: 5px;
+  height: 100%;
+  z-index: 3;
+  width: calc(100vw - 32px);
+  overflow-y: scroll;
+}
+
+.note {
+  display: block;
+  opacity: 0;
+  clear: both;
+  line-height: 18px;
+  padding: 6px;
+  padding-left: 8px;
+  margin-top: 5px;
+  max-width: 100%;
+  padding: 8px;
+  background-color: #f7f7f0;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 300;
+  width: fit-content;
+  margin-left: 50%;
+  transform: translate(-50%, 0);
+}
+
+.message {
+  color: #000;
+  clear: both;
+  line-height: 18px;
+  font-size: 15px;
+  padding: 6px;
+  padding-left: 8px;
+  position: relative;
+  margin: 2px 0;
+  margin-top: 3px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.message2 {
+  color: #000;
+  clear: both;
+  line-height: 18px;
+  font-size: 15px;
+  padding: 6px;
+  padding-left: 8px;
+  position: relative;
+  margin: 2px 0;
+  margin-top: 3px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.message:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+
+.metadata {
+  display: inline-block;
+  float: right;
+  padding: 0 0 0 7px;
+  position: relative;
+  bottom: -4px;
+}
+
+.metadata .time {
+  color: rgba(0, 0, 0, .45);
+  font-size: 11px;
+  display: inline-block;
+}
+
+.metadata .tick {
+  display: inline-block;
+  margin-left: 2px;
+  position: relative;
+  top: 4px;
+  height: 16px;
+  width: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='15'%3E%3Cpath d='M15.01 3.316l-.478-.372a.365.365 0 0 0-.51.063L8.666 9.88a.32.32 0 0 1-.484.032l-.358-.325a.32.32 0 0 0-.484.032l-.378.48a.418.418 0 0 0 .036.54l1.32 1.267a.32.32 0 0 0 .484-.034l6.272-8.048a.366.366 0 0 0-.064-.512zm-4.1 0l-.478-.372a.365.365 0 0 0-.51.063L4.566 9.88a.32.32 0 0 1-.484.032L1.892 7.77a.366.366 0 0 0-.516.005l-.423.433a.364.364 0 0 0 .006.514l3.255 3.185a.32.32 0 0 0 .484-.033l6.272-8.048a.365.365 0 0 0-.063-.51z' fill='%234fc3f7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+}
+
+.metadata .tick svg:first-child {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: perspective(800px) rotateY(180deg);
+  transform: perspective(800px) rotateY(180deg);
+}
+
+.metadata .tick svg:last-child {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: perspective(800px) rotateY(0deg);
+  transform: perspective(800px) rotateY(0deg);
+}
+
+.metadata .tick-animation svg:first-child {
+  -webkit-transform: perspective(800px) rotateY(0);
+  transform: perspective(800px) rotateY(0);
+}
+
+.metadata .tick-animation svg:last-child {
+  -webkit-transform: perspective(800px) rotateY(-179.9deg);
+  transform: perspective(800px) rotateY(-179.9deg);
+}
+
+.message:first-child {
+  margin: 16px 0 8px;
+}
+
+.message.received {
+  background: #fff;
+  border-radius: 0px 8px 8px 8px;
+  float: left;
+}
+
+.message2.received {
+  background: #fff;
+  border-radius: 8px 8px 8px 8px;
+  float: left;
+}
+
+.message.received .metadata {
+  padding: 0 0 0 16px;
+}
+
+.message.received:after {
+  border-width: 0px 10px 10px 0;
+  border-radius: 5px 0px 0px 0px;
+  border-color: transparent #fff transparent transparent;
+  top: 0;
+  left: -10px;
+}
+
+.message.sent {
+  background: #e1ffc7;
+  border-radius: 8px 0px 8px 8px;
+  float: right;
+}
+
+.message2.sent {
+  background: #e1ffc7;
+  border-radius: 8px 8px 8px 8px;
+  float: right;
+}
+
+.message.sent:after {
+  border-width: 0px 0px 10px 10px;
+  border-radius: 0px 5px 0px 0px;
+  border-color: transparent transparent transparent #e1ffc7;
+  top: 0;
+  right: -10px;
+}
+
+.marvel-device .status-bar {
+  display: none;
+}
+
+
+.convochatbg {
+  position: fixed;
+  background: #e7dcd2;
+  height: 60px;
+  bottom: 0px;
+  width: 100vw;
+  display: flex;
+}
+
+
+.msginput {
+  position: relative;
+  background: #fff;
+  height: 45px;
+  top: 7.5px;
+  left: 6.5px;
+  margin-right: 66px;
+  border-radius: 50px;
+  flex: 1;
+}
+
+#mic,
+#icsend {
+  position: absolute;
+  width: 47px;
+  height: 47px;
+  right: 6.5px;
+  bottom: 6.5px;
+}
+
+#emoji {
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  top: 8.5px;
+  left: 8.5px;
+}
+
+#messagetxt {
+  position: absolute;
+  color: #666;
+  font-weight: 500;
+  left: 43px;
+  top: -1.5px;
+}
+
+#camera {
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  top: 8.5px;
+  right: 8.5px;
+}
+
+#rupee {
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  top: 8.5px;
+  right: 49px;
+}
+
+#docs {
+  position: absolute;
+  height: 28px;
+  width: 28px;
+  top: 8.5px;
+  right: 86.5px;
+}
+
+#msginputtag {
+  height: 100%;
+  margin-left: 43px;
+  width: 50%;
+  font-size: 16px;
+  text-decoration: none;
+  outline: none;
+  border: none;
+}
